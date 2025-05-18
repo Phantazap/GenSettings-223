@@ -45,7 +45,8 @@ public class CGScreen extends Screen {
 
     public final void init() {
         this.buttons.clear();
-        this.buttons.add(new ButtonWidget(0, this.width / 2 - 100, this.height / 4, "Sussy: "));
+        this.buttons.add(new ButtonWidget(0, this.width / 2 - 100, this.height / 4, "Sussy"));
+        this.buttons.add(new ButtonWidget(1, this.width / 2 - 100, this.height / 4 + 24, "Baka"));
         this.buttons.add(new ButtonWidget(1000, this.width / 2 - 100, this.height / 4 + 120 + 12, "Cancel"));
     }
 
@@ -54,6 +55,12 @@ public class CGScreen extends Screen {
             this.minecraft.openScreen(this.parent);
         } else if (button.id == 0) {
             CGCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.selectedType, this.selectedTheme, this.seed, this.surroundingWaterHeight, this.surroundingGroundHeight);
+            this.minecraft.openScreen((Screen) null);
+        }  else if (button.id == 1) {
+            worldWidth = 256;
+            worldLength = 256;
+            worldHeight = 64;
+            ClassicCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
             this.minecraft.openScreen((Screen) null);
         }
     }
