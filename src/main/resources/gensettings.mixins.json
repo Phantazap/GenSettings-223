@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "com.phantazap.gensettings.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"GenerateLevelScreenMixin",
+		"WorldRendererMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

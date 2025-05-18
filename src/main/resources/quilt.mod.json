@@ -1,0 +1,29 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "${group}",
+		"id": "gensettings",
+		"version": "${version}",
+		"metadata": {
+			"name": "GenSettings",
+			"description": "Adds more settings to level generation screen.",
+			"contributors": {
+				"Phantazap": "Owner"
+			},
+			"contact": {
+				"issues": "https://github.com/phantazap/gensettings/issues",
+				"sources": "https://github.com/legotaylor/gensettings"
+			},
+			"icon": "assets/gensettings/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.19.1"
+			}
+		]
+	},
+	"mixin": "gensettings.mixins.json",
+	"access_widener" : "gensettings.accesswidener"
+}
