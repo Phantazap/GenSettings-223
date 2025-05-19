@@ -64,10 +64,7 @@ public class CGScreen extends Screen {
             ClassicCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
             this.minecraft.openScreen(null);
         }   else if (button.id == 2) {
-            worldWidth = 256;
-            worldLength = 256;
-            worldHeight = 64;
-            FlowerCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight);
+            FlowerCreateWorld.createWorld(this.minecraft);
             this.minecraft.openScreen(null);
         }
     }

@@ -1,36 +1,31 @@
 package com.phantazap.gensettings.client;
 
-import net.minecraft.client.ProgressListener;
 import net.minecraft.world.World;
 
 public class FlowerWorldGenerator {
-    private final ProgressListener levelLoaderListener;
-    private int width;
-    private int height;
+    public int width = 256;
+    public int length = 256;
+    public int height = 16;
     public SkippableRandom seed;
     private byte[] blocks;
 
-    public FlowerWorldGenerator(ProgressListener levelLoaderListener) {
-        this.levelLoaderListener = levelLoaderListener;
+    public FlowerWorldGenerator() {
+
     }
 
-    public World generateLevel(int width, int length, int height) {
+    public World generateLevel() {
         //Do some initializing stuff
         long start = System.currentTimeMillis();
-        this.levelLoaderListener.progressStart("Generating level");
-        this.width = width;
-        this.height = length;
         this.seed = new SkippableRandom(2048);
         int waterLevel = 1;
         this.blocks = new byte[width * length << 6];
-        this.levelLoaderListener.progressStage("Raising..");
-        int[] plane = new int[256 * 256];
+        int[] plane = new int[width * length];
 
         //Necessary to avoid crash
-        for (int widthLoop = 0; widthLoop < 256; ++widthLoop) {
-            for (int lengthLoop = 0; lengthLoop < 256; ++lengthLoop) {
-                int area = plane[widthLoop + lengthLoop * 256] + waterLevel;
-                plane[widthLoop + lengthLoop * 256] = area;
+        for (int widthLoop = 0; widthLoop < width; ++widthLoop) {
+            for (int lengthLoop = 0; lengthLoop < length; ++lengthLoop) {
+                int area = plane[widthLoop + lengthLoop * width] + waterLevel;
+                plane[widthLoop + lengthLoop * width] = area;
             }
         }
 
@@ -64,13 +59,12 @@ public class FlowerWorldGenerator {
         World world = new World();
         world.surroundingWaterHeight = waterLevel;
         world.surroundingGroundHeight = waterLevel;
-        world.assemble(width, 64, length, this.blocks, null);
+        world.assemble(width, height, length, this.blocks, null);
         world.timeOfCreation = System.currentTimeMillis();
         world.author = "Phantazap";
         world.name = "A Nice World";
         world.spawnY = 2;
         world.cloudHeight = height + 2;
-        this.levelLoaderListener.progressStage("Spawning..");
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
         System.out.println("World generated in " + timeElapsed + " milliseconds.");
@@ -80,16 +74,16 @@ public class FlowerWorldGenerator {
     private void growFlowers(int[] blocks) {
         for (int i = 0; i < 21; ++i) {
             int rose = this.seed.nextInt(2);
-            int widthSeed = this.seed.nextInt(this.width);
-            int heightSeed = this.seed.nextInt(this.height);
+            int widthSeed = this.seed.nextInt(width);
+            int heightSeed = this.seed.nextInt(length);
             for (int j = 0; j < 10; ++j) {
                 int flowerX = widthSeed;
                 int flowerZ = heightSeed;
                 for (int k = 0; k < 5; ++k) {
                     flowerX += this.seed.nextInt(6) - this.seed.nextInt(6);
                     flowerZ += this.seed.nextInt(6) - this.seed.nextInt(6);
-                    if (flowerX >= 0 && flowerZ >= 0 && flowerX < this.width && flowerZ < this.height) {
-                        int index = ((blocks[flowerX + flowerZ * 256] + 1) * this.height + flowerZ) * this.width + flowerX;
+                    if (flowerX >= 0 && flowerZ >= 0 && flowerX < width && flowerZ < length) {
+                        int index = ((blocks[flowerX + flowerZ * width] + 1) * length + flowerZ) * width + flowerX;
                         if ((this.blocks[index] & 255) == 0) {
                             this.blocks[index] = (byte) (rose == 0 ? 37 : 38); // Block.YELLOW_FLOWER.id : Block.RED_FLOWER.id
                         }
