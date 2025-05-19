@@ -5,6 +5,7 @@ public class SkippableRandom {
 	private static final long multiplier = 0x5DEECE66DL;
 	private static final long addend = 0xBL;
 	private static final long mask = (1L << 48) - 1;
+	private static final long modulus = mask + 1;
 
 	public SkippableRandom(long seed) {
 		this.seed = (seed ^ multiplier) & mask;
@@ -37,27 +38,27 @@ public class SkippableRandom {
 	}
 
 	public void skip(long steps) {
-		seed = skipLCG(seed, multiplier, addend, mask + 1, steps);
+		seed = skipLCG(seed, steps);
 	}
 
-	private static long skipLCG(long oldSeed, long multiplier, long addend, long modulus, long steps) {
+	private static long skipLCG(long oldSeed, long steps) {
 		long multiplierPow = 1;
 		long addendSum = 0;
 
-		long currentMultiplier = multiplier;
-		long currentAddend = addend;
+		long currentMultiplier = SkippableRandom.multiplier;
+		long currentAddend = SkippableRandom.addend;
 
 		while (steps > 0) {
 			if ((steps & 1) != 0) {
-				multiplierPow = (multiplierPow * currentMultiplier) % modulus;
-				addendSum = (addendSum * currentMultiplier + currentAddend) % modulus;
+				multiplierPow = (multiplierPow * currentMultiplier) % SkippableRandom.modulus;
+				addendSum = (addendSum * currentMultiplier + currentAddend) % SkippableRandom.modulus;
 			}
 
-			currentAddend = (currentMultiplier + 1) * currentAddend % modulus;
-			currentMultiplier = (currentMultiplier * currentMultiplier) % modulus;
+			currentAddend = (currentMultiplier + 1) * currentAddend % SkippableRandom.modulus;
+			currentMultiplier = (currentMultiplier * currentMultiplier) % SkippableRandom.modulus;
 			steps >>= 1;
 		}
 
-		return (oldSeed * multiplierPow + addendSum) % modulus;
+		return (oldSeed * multiplierPow + addendSum) % SkippableRandom.modulus;
 	}
 }
