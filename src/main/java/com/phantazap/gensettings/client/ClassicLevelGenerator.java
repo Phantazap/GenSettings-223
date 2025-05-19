@@ -1,6 +1,5 @@
 package com.phantazap.gensettings.client;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.client.ProgressListener;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.noise.Distort;
@@ -25,6 +24,7 @@ public class ClassicLevelGenerator {
     }
 
     public final World generateLevel(String creator, int width, int height, int depth, Random seed) {
+        long start = System.currentTimeMillis();
         this.levelLoaderListener.progressStart("Generating level");
         this.width = width;
         this.height = height;
@@ -239,6 +239,9 @@ public class ClassicLevelGenerator {
         this.levelLoaderListener.progressStage("Spawning..");
         i38 = this.width * this.height * this.depth / 800;
         System.out.println(i43 + " mobs");
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
+        System.out.println("World generated in " + timeElapsed + " milliseconds.");
         return level34;
     }
 

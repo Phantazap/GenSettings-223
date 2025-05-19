@@ -12,7 +12,7 @@ public class CGScreen extends Screen {
     public int worldWidth;
     public int worldLength;
     public int worldHeight;
-    public Random seed = new Random();
+    public Random seed = new Random(2048);
     public int surroundingWaterHeight;
     public int surroundingGroundHeight;
 
@@ -47,6 +47,7 @@ public class CGScreen extends Screen {
         this.buttons.clear();
         this.buttons.add(new ButtonWidget(0, this.width / 2 - 100, this.height / 4, "Sussy"));
         this.buttons.add(new ButtonWidget(1, this.width / 2 - 100, this.height / 4 + 24, "Baka"));
+        this.buttons.add(new ButtonWidget(2, this.width / 2 - 100, this.height / 4 + 48, "Flower"));
         this.buttons.add(new ButtonWidget(1000, this.width / 2 - 100, this.height / 4 + 120 + 12, "Cancel"));
     }
 
@@ -61,6 +62,12 @@ public class CGScreen extends Screen {
             worldLength = 256;
             worldHeight = 64;
             ClassicCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
+            this.minecraft.openScreen((Screen) null);
+        }   else if (button.id == 2) {
+            worldWidth = 256;
+            worldLength = 256;
+            worldHeight = 64;
+            FlowerCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
             this.minecraft.openScreen((Screen) null);
         }
     }
