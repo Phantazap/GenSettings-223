@@ -7,13 +7,11 @@ import java.util.Random;
 
 
 public class FlowerCreateWorld {
-    public static void createWorld(Minecraft minecraft, int length, int width, int height, Random seed) {
-        minecraft.setWorld((World)null);
+    public static void createWorld(Minecraft minecraft, int length, int width, int height) {
+        minecraft.setWorld(null);
         System.gc();
-        FlowerWorldGenerator worldGenerator;
-        worldGenerator = new FlowerWorldGenerator(minecraft.progressRenderer);
-
-        World world = worldGenerator.generateLevel(width, length, height, seed);
+        FlowerWorldGenerator worldGenerator = new FlowerWorldGenerator(minecraft.progressRenderer);
+        World world = worldGenerator.generateLevel(width, length, height);
         minecraft.setWorld(world);
     }
 }
