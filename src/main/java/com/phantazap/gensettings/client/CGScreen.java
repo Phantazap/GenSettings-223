@@ -56,19 +56,19 @@ public class CGScreen extends Screen {
             this.minecraft.openScreen(this.parent);
         } else if (button.id == 0) {
             CGCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.selectedType, this.selectedTheme, this.seed, this.surroundingWaterHeight, this.surroundingGroundHeight);
-            this.minecraft.openScreen((Screen) null);
+            this.minecraft.openScreen(null);
         }  else if (button.id == 1) {
             worldWidth = 256;
             worldLength = 256;
             worldHeight = 64;
             ClassicCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
-            this.minecraft.openScreen((Screen) null);
+            this.minecraft.openScreen(null);
         }   else if (button.id == 2) {
             worldWidth = 256;
             worldLength = 256;
             worldHeight = 64;
-            FlowerCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight, this.seed);
-            this.minecraft.openScreen((Screen) null);
+            FlowerCreateWorld.createWorld(this.minecraft, this.worldLength, this.worldWidth, this.worldHeight);
+            this.minecraft.openScreen(null);
         }
     }
 

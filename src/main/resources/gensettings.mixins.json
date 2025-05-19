@@ -3,6 +3,7 @@
 	"package": "com.phantazap.gensettings.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+		"FlowerTileMixin",
 		"GenerateLevelScreenMixin",
 		"WorldRendererMixin"
 	],
