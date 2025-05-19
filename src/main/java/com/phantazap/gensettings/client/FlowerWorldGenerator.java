@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 public class FlowerWorldGenerator {
     public int width = 256;
     public int length = 256;
-    public int height = 16;
+    public int height = 1;
     public SkippableRandom seed;
     private byte[] blocks;
 
@@ -17,7 +17,7 @@ public class FlowerWorldGenerator {
         //Do some initializing stuff
         long start = System.currentTimeMillis();
         this.seed = new SkippableRandom(2048);
-        int waterLevel = 1;
+        int waterLevel = 0;
         this.blocks = new byte[width * length << 6];
         int[] plane = new int[width * length];
 
@@ -79,13 +79,14 @@ public class FlowerWorldGenerator {
             for (int j = 0; j < 10; ++j) {
                 int flowerX = widthSeed;
                 int flowerZ = heightSeed;
+                int flowerY = 0;
                 for (int k = 0; k < 5; ++k) {
                     flowerX += this.seed.nextInt(6) - this.seed.nextInt(6);
                     flowerZ += this.seed.nextInt(6) - this.seed.nextInt(6);
                     if (flowerX >= 0 && flowerZ >= 0 && flowerX < width && flowerZ < length) {
-                        int index = ((blocks[flowerX + flowerZ * width] + 1) * length + flowerZ) * width + flowerX;
+                        int index = ((blocks[flowerX + flowerZ * width] + flowerY) * length + flowerZ) * width + flowerX;
                         if ((this.blocks[index] & 255) == 0) {
-                            this.blocks[index] = (byte) (rose == 0 ? 37 : 38); // Block.YELLOW_FLOWER.id : Block.RED_FLOWER.id
+                            this.blocks[index] = (byte) (rose == 0 ? 37 : 3); // Block.YELLOW_FLOWER.id : Block.RED_FLOWER.id
                         }
                     }
                 }
